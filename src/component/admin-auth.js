@@ -1,5 +1,5 @@
 export const ADMIN_EMAIL = 'admin@pakgondes.local'
-export const AUTH_STORAGE_KEY = 'pakgondes_admin_authenticated'
+
 const ADMIN_PASSWORD_SALT = 'd30e0af2642d90a40a0f97dfb675219a'
 const ADMIN_PASSWORD_HASH = 'f53f49b92cc457e9dc6580fb9c78f251fcb26f1b95ff35edf8de1b95e8871c8b'
 const PASSWORD_HASH_ITERATIONS = 600000
