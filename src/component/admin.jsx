@@ -40,7 +40,7 @@ function readVisitorState() {
 // Halaman ADMIN: login -> dashboard (ringkasan angka, kelola menu, tabel pesanan, akun pengunjung).
 function Admin() {
   // Status login, nilai awal dibaca dari sessionStorage supaya tidak logout saat halaman dimuat ulang.
-  const [authenticated, setAuthenticated] = useState(sessionStorage.getItem(AUTH_STORAGE_KEY) === 'true')
+  const [authenticated, setAuthenticated] = useState(false)
   const [credentials, setCredentials] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
@@ -112,26 +112,31 @@ function Admin() {
   }, [authenticated])
 
   // Cocokkan email & sandi dengan konstanta. Jika benar: simpan penanda ke sessionStorage + ubah state.
-  async function login(event) {
-    event.preventDefault()
-    try {
-      if (!await isValidAdminCredentials(credentials)) {
-        setError('Email atau kata sandi tidak sesuai.')
-        return
-      }
-      sessionStorage.setItem(AUTH_STORAGE_KEY, 'true')
-      setAuthenticated(true)
-      setError('')
-    } catch (loginError) {
-      setError(`Login gagal diverifikasi: ${loginError.message}`)
+async function login(event) {
+  event.preventDefault()
+
+  try {
+    const isValid = await isValidAdminCredentials(credentials)
+
+    if (!isValid) {
+      setError('Email atau kata sandi tidak sesuai.')
+      return
     }
+
+    setAuthenticated(true)
+    setError('')
+    setCredentials({ email: '', password: '' })
+
+  } catch (loginError) {
+    setError(`Login gagal diverifikasi: ${loginError.message}`)
   }
+}
 
   // Hapus penanda login.
-  function logout() {
-    sessionStorage.removeItem(AUTH_STORAGE_KEY)
-    setAuthenticated(false)
-  }
+ function logout() {
+  setAuthenticated(false)
+  setCredentials({ email: '', password: '' })
+}
 
   // Ubah status satu pesanan: salin array dengan map (immutable), ubah yang cocok, simpan ke localStorage lalu ke state.
   function updateStatus(orderId, status) {
