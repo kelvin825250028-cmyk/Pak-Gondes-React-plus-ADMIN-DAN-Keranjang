@@ -1,0 +1,14 @@
+/* Baris 1: penjelasan untuk deklarasi atau aturan CSS berikut. */
+body {
+/* Baris 2: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  margin: 0;
+/* Baris 3: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 5: penjelasan untuk deklarasi atau aturan CSS berikut. */
+#root {
+/* Baris 6: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  min-height: 100vh;
+/* Baris 7: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */

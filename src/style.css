@@ -1,0 +1,317 @@
+/* Baris 1: penjelasan untuk deklarasi atau aturan CSS berikut. */
+:root {
+/* Baris 2: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --red: #93000b;
+/* Baris 3: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --soft: #fbf2f0;
+/* Baris 4: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --line: #ebdad6;
+/* Baris 5: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-danger: var(--red);
+/* Baris 6: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-danger-rgb: 147, 0, 11;
+/* Baris 7: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-tertiary-bg: var(--soft);
+/* Baris 8: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-body-bg: #fff8f6;
+/* Baris 9: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-body-color: #2a2423;
+/* Baris 10: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-card-border-color: var(--line);
+/* Baris 11: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 13: penjelasan untuk deklarasi atau aturan CSS berikut. */
+body {
+/* Baris 14: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  line-height: 1.6;
+/* Baris 15: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 17: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.btn-danger {
+/* Baris 18: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-btn-bg: var(--red);
+/* Baris 19: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-btn-border-color: var(--red);
+/* Baris 20: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-btn-hover-bg: #6f0008;
+/* Baris 21: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-btn-hover-border-color: #6f0008;
+/* Baris 22: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 24: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.btn-outline-danger {
+/* Baris 25: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-btn-color: var(--red);
+/* Baris 26: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-btn-border-color: var(--red);
+/* Baris 27: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-btn-hover-bg: var(--red);
+/* Baris 28: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --bs-btn-hover-border-color: var(--red);
+/* Baris 29: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 31: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.site-header nav a,
+/* Baris 32: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.site-header nav .dropdown-toggle {
+/* Baris 33: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  color: inherit;
+/* Baris 34: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  text-decoration: none;
+/* Baris 35: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 37: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.site-header nav .dropdown-toggle {
+/* Baris 38: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  font: inherit;
+/* Baris 39: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  line-height: inherit;
+/* Baris 40: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 42: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.site-header nav a:hover,
+/* Baris 43: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.site-header nav .dropdown-toggle:hover {
+/* Baris 44: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  color: var(--red);
+/* Baris 45: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 47: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.photo {
+/* Baris 48: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  aspect-ratio: 4 / 3;
+/* Baris 49: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+.favorite-menu-title {
+  min-height: 3.6em;
+  line-height: 1.2;
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 51: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.store-status-bar {
+/* Baris 52: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  background: #198754;
+/* Baris 53: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 55: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.store-status-bar.is-closed {
+/* Baris 56: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  background: #6c1b22;
+/* Baris 57: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 59: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.cart-item {
+/* Baris 60: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  background: #fff;
+/* Baris 61: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 63: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.cart-quantity {
+/* Baris 64: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  max-width: 88px;
+/* Baris 65: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 67: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.cart-checkout {
+/* Baris 68: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  max-width: 720px;
+/* Baris 69: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  margin-inline: auto;
+/* Baris 70: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 72: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.cart-receipt-wrap {
+/* Baris 73: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  max-width: 760px;
+/* Baris 74: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  margin-inline: auto;
+/* Baris 75: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 77: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.cart-receipt {
+/* Baris 78: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  background: #fff;
+/* Baris 79: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 81: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.admin-login-page {
+/* Baris 82: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  min-height: 100vh;
+/* Baris 83: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  display: grid;
+/* Baris 84: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  place-items: center;
+/* Baris 85: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  padding: 1.5rem;
+/* Baris 86: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  background: #e9ecef;
+/* Baris 87: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 89: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.admin-login-card {
+/* Baris 90: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  width: min(100%, 400px);
+/* Baris 91: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 93: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.adminlte-dashboard {
+/* Baris 94: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  min-height: 100vh;
+/* Baris 95: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --lte-sidebar-width: 250px;
+/* Baris 96: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 98: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.adminlte-dashboard .app-sidebar {
+/* Baris 99: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  --lte-sidebar-width: 250px;
+/* Baris 100: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 102: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.adminlte-dashboard .nav-link p {
+/* Baris 103: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  display: inline;
+/* Baris 104: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  margin: 0 0 0 0.5rem;
+/* Baris 105: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 107: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.adminlte-dashboard .small-box {
+/* Baris 108: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  min-height: 125px;
+/* Baris 109: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  overflow: hidden;
+/* Baris 110: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 112: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.adminlte-dashboard .small-box .inner {
+/* Baris 113: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  padding: 1rem;
+/* Baris 114: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 116: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.adminlte-dashboard .small-box h3 {
+/* Baris 117: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  font-weight: 700;
+/* Baris 118: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 120: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.admin-search {
+/* Baris 121: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  width: min(100%, 320px);
+/* Baris 122: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+.admin-status-filter {
+  width: min(100%, 190px);
+}
+
+.admin-date-filter {
+  width: min(100%, 190px);
+  min-height: 31px;
+}
+
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 124: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.adminlte-dashboard .card-title {
+/* Baris 125: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  font-size: 1.1rem;
+/* Baris 126: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Skip links injected by AdminLTE JS: hidden until keyboard focus (AdminLTE CSS only loads on the admin page) */
+/* Baris 129: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.skip-links .skip-link {
+/* Baris 130: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  position: absolute;
+/* Baris 131: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  top: -48px;
+/* Baris 132: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  left: 8px;
+/* Baris 133: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  z-index: 2000;
+/* Baris 134: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  padding: 8px 16px;
+/* Baris 135: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  font-weight: 600;
+/* Baris 136: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  color: #fff;
+/* Baris 137: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  background: var(--red);
+/* Baris 138: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  border-radius: 0 0 6px 6px;
+/* Baris 139: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  text-decoration: none;
+/* Baris 140: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 142: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.skip-links .skip-link:focus {
+/* Baris 143: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  top: 0;
+/* Baris 144: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  outline: 3px solid #ffc107;
+/* Baris 145: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  outline-offset: 2px;
+/* Baris 146: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Skip links injected by AdminLTE JS: hidden until keyboard focus (AdminLTE CSS only loads on the admin page) */
+/* Baris 149: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.skip-links .skip-link {
+/* Baris 150: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  position: absolute;
+/* Baris 151: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  top: -48px;
+/* Baris 152: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  left: 8px;
+/* Baris 153: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  z-index: 2000;
+/* Baris 154: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  padding: 8px 16px;
+/* Baris 155: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  font-weight: 600;
+/* Baris 156: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  color: #fff;
+/* Baris 157: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  background: var(--red);
+/* Baris 158: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  border-radius: 0 0 6px 6px;
+/* Baris 159: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  text-decoration: none;
+/* Baris 160: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}
+/* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
+/* Baris 162: penjelasan untuk deklarasi atau aturan CSS berikut. */
+.skip-links .skip-link:focus {
+/* Baris 163: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  top: 0;
+/* Baris 164: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  outline: 3px solid #ffc107;
+/* Baris 165: penjelasan untuk deklarasi atau aturan CSS berikut. */
+  outline-offset: 2px;
+/* Baris 166: penjelasan untuk deklarasi atau aturan CSS berikut. */
+}

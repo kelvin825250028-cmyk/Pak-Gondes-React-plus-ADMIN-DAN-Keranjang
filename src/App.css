@@ -1,0 +1,262 @@
+/* Bagian ini adalah gaya khusus untuk komponen demo App.
+ * Selector, pseudo-class, flexbox, nesting, transform, dan media query berikut
+ * adalah bagian yang paling mudah membingungkan bagi pemula. */
+.counter {
+  /* Ukuran huruf digunakan untuk membuat tulisan counter mudah dibaca. */
+  font-size: 16px;
+  /* Menambahkan jarak horizontal dan vertikal di dalam tombol/panel counter. */
+  padding: 5px 10px;
+  /* Membulatkan sudut sebesar 5 piksel. */
+  border-radius: 5px;
+  /* var(--accent) mengambil warna aksen dari variabel CSS global. */
+  color: var(--accent);
+  /* var(--accent-bg) mengambil warna latar aksen dari variabel CSS global. */
+  background: var(--accent-bg);
+  /* Border dibuat transparan secara default agar tidak mengubah ukuran elemen. */
+  border: 2px solid transparent;
+  /* Hanya perubahan border yang dianimasikan selama 0,3 detik. */
+  transition: border-color 0.3s;
+  /* Memberi jarak bawah 24 piksel sebelum elemen berikutnya. */
+  margin-bottom: 24px;
+
+  /* &:hover berarti keadaan ketika kursor berada di atas elemen counter. */
+  &:hover {
+    /* Warna border berubah melalui variabel agar tema mudah diganti. */
+    border-color: var(--accent-border);
+  }
+
+  /* :focus-visible menandai elemen saat mendapat fokus melalui keyboard.
+   * Outline membantu pengguna mengenali elemen yang sedang aktif. */
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    /* Jarak 2 piksel membuat outline terpisah dari tepi elemen. */
+    outline-offset: 2px;
+  }
+}
+
+/* .hero adalah wadah utama untuk logo dan elemen dekorasi 3D. */
+.hero {
+  /* relative membuat elemen anak yang absolute diposisikan terhadap .hero,
+   * bukan terhadap halaman secara keseluruhan. */
+  position: relative;
+
+  /* Aturan ini digabung agar ketiga elemen punya posisi horizontal sama.
+   * inset-inline: 0 mengisi sisi kiri dan kanan.
+   * margin: 0 auto menempatkan elemen di tengah sumbu horizontal. */
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  /* .base adalah elemen lapisan paling bawah pada animasi/logo. */
+  .base {
+    width: 170px;
+    /* relative tidak menggeser elemen dari aliran normal secara penuh,
+     * tetapi tetap memungkinkan z-index mengatur urutan lapisan. */
+    position: relative;
+    z-index: 0;
+  }
+
+  /* framework dan vite akan diposisikan bebas terhadap wadah .hero. */
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  /* .framework berada di atas lapisan dasar. */
+  .framework {
+    /* Nilai z-index lebih besar menempatkan elemen di depan lapisan lain. */
+    z-index: 1;
+    /* Jarak 34 piksel dari tepi atas wadah hero. */
+    top: 34px;
+    height: 28px;
+    /* Transform 3D menggabungkan perspektif, rotasi pada tiga sumbu,
+     * dan pembesaran menjadi satu tampilan miring. Urutannya berpengaruh. */
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  /* .vite adalah lapisan grafik yang berada di belakang framework. */
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    /* Sudut dan skala berbeda digunakan untuk menghasilkan ilusi kedalaman. */
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+/* Bagian tengah memiliki susunan vertikal yang selalu ditengahkan. */
+#center {
+  /* flex mengaktifkan model tata letak satu dimensi. */
+  display: flex;
+  /* column membuat item tersusun dari atas ke bawah. */
+  flex-direction: column;
+  gap: 25px;
+  /* Menengahkan item pada sumbu utama (vertikal untuk flex-direction: column). */
+  place-content: center;
+  /* Menengahkan item pada sumbu silang (horizontal untuk layout ini). */
+  place-items: center;
+  /* flex-grow: 1 membiarkan wadah mengambil ruang kosong yang tersedia. */
+  flex-grow: 1;
+
+  /* Media query ini mengubah jarak saat layar tidak lebih lebar dari 1024 px.
+   * Ini adalah titik putus responsif untuk perangkat atau jendela yang sempit. */
+  @media (max-width: 1024px) {
+    padding: 32px 20px 24px;
+    gap: 18px;
+  }
+}
+
+/* Wadah bagian pilihan/langkah berikutnya. */
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  /* & > div hanya memilih elemen div langsung di dalam #next-steps.
+   * Tanda & pada nesting CSS merujuk kembali ke selector induk. */
+  & > div {
+    /* 1 1 0 menghasilkan tiga arti: boleh tumbuh, boleh mengecil,
+     * dan basis ukuran awal adalah nol sehingga kolom berbagi ruang sama rata. */
+    flex: 1 1 0;
+    padding: 32px;
+
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  /* Gaya khusus untuk ikon kecil di dalam bagian next steps. */
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Pada layar sempit, kolom dibalik menjadi susunan vertikal.
+   * text-align: center juga menengahkan isi setiap kolom. */
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Bagian dokumentasi dipisahkan dari bagian lain dengan garis kanan. */
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    /* Garis kanan dihapus karena layout sudah berubah menjadi vertikal. */
+    border-right: none;
+    /* Garis bawah menjadi pembatas antarbagian pada tampilan sempit. */
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+/* Daftar tautan di bagian next steps. */
+#next-steps ul {
+  /* Menghapus titik/bulet bawaan daftar HTML. */
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  /* Setiap tautan dibentuk sebagai kotak tombol. */
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    /* Menghapus garis bawah bawaan elemen <a>. */
+    text-decoration: none;
+    /* box-shadow akan dianimasikan secara halus saat hover. */
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      /* Variabel shadow berisi konfigurasi bayangan yang konsisten. */
+      box-shadow: var(--shadow);
+    }
+
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  /* Pada layar sempit, tautan dibungkus dan dapat membagi baris. */
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    /* Membolehkan item pindah ke baris berikutnya. */
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      /* Setiap item mengambil kira-kira setengah lebar dikurangi celah 8 px.
+       * Ini menghasilkan susunan dua kolom. */
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      /* padding dan border dihitung di dalam total width agar tidak melebar. */
+      box-sizing: border-box;
+    }
+  }
+}
+
+/* Spacer adalah elemen pemisah vertikal berukuran tetap. */
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    /* Jarak pemisah diperkecil agar tampilan mobile tidak terlalu kosong. */
+    height: 48px;
+  }
+}
+
+/* .ticks menggunakan pseudo-element untuk menggambar tanda panah di tepi. */
+.ticks {
+  position: relative;
+  width: 100%;
+
+  /* ::before dan ::after membuat dua elemen semu di ujung kiri dan kanan.
+   * content wajib ada agar pseudo-element terlihat meskipun isinya kosong. */
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    /* Border transparan membentuk bidang segitiga sebelum sisi berwarna diaktifkan. */
+    border: 5px solid transparent;
+  }
+
+  /* ::before ditempatkan di kiri. */
+  &::before {
+    left: 0;
+    /* Memberi warna hanya pada sisi kiri, sehingga border terlihat seperti segitiga. */
+    border-left-color: var(--border);
+  }
+
+  /* ::after ditempatkan di kanan. */
+  &::after {
+    right: 0;
+    /* Memberi warna hanya pada sisi kanan. */
+    border-right-color: var(--border);
+  }
+}
