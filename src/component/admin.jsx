@@ -16,7 +16,6 @@ import { createMenuId, menuCategories, saveMenu } from './menu-data.js'
 import { pageUrl } from './navigation.js'
 import useMenuCatalog from './use-menu-catalog.js'
 import {
-  AUTH_STORAGE_KEY,
   isValidAdminCredentials,
 } from './admin-auth.js'
 import {
