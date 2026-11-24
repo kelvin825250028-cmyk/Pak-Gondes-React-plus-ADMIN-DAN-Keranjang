@@ -25,23 +25,28 @@ import {
   defaultHomeContent,
   homeButtonTargets,
 } from './home-content.js'
+import { readSiteVisitors, SITE_USERS_STORAGE_KEY } from './site-auth.js'
 
 // Daftar status pesanan yang dapat dipilih admin.
 const orderStatuses = ['Baru', 'Menunggu konfirmasi', 'Diproses', 'Selesai', 'Dibatalkan']
-// Data PENGUNJUNG CONTOH (palsu). Aplikasi belum mengumpulkan data pengunjung sungguhan; tabel ini hanya contoh tampilan.
-const demoVisitors = [
-  { name: 'Nadia Putri', email: 'nadia@example.com', visits: 8, status: 'Aktif' },
-  { name: 'Rizky Pratama', email: 'rizky@example.com', visits: 5, status: 'Aktif' },
-  { name: 'Aulia Safitri', email: 'aulia@example.com', visits: 3, status: 'Aktif' },
-]
 
-// Halaman ADMIN: login -> dashboard (ringkasan angka, kelola menu, tabel pesanan, pengunjung contoh).
+function readVisitorState() {
+  try {
+    return { visitors: readSiteVisitors(), error: '' }
+  } catch (readError) {
+    return { visitors: [], error: `Data pengunjung gagal dibaca: ${readError.message}` }
+  }
+}
+
+// Halaman ADMIN: login -> dashboard (ringkasan angka, kelola menu, tabel pesanan, akun pengunjung).
 function Admin() {
   // Status login, nilai awal dibaca dari sessionStorage supaya tidak logout saat halaman dimuat ulang.
   const [authenticated, setAuthenticated] = useState(sessionStorage.getItem(AUTH_STORAGE_KEY) === 'true')
   const [credentials, setCredentials] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
+  const [visitorState, setVisitorState] = useState(readVisitorState)
+  const { visitors, error: visitorsError } = visitorState
   const [orderStatusFilter, setOrderStatusFilter] = useState('')
   const [orderDateFilter, setOrderDateFilter] = useState('')
   const datePickerButtonRef = useRef(null)
@@ -69,6 +74,9 @@ function Admin() {
     function syncOrders(event) {
       if (event.key === 'pakgondes_orders') {
         setOrders(readOrders())
+      }
+      if (event.key === SITE_USERS_STORAGE_KEY || event.key === null) {
+        setVisitorState(readVisitorState())
       }
     }
 
@@ -266,8 +274,8 @@ function Admin() {
     )
     return matchesSearch && matchesStatus && matchesDate
   })
-  // Filter yang sama untuk tabel pengunjung contoh.
-  const filteredVisitors = demoVisitors.filter((visitor) => (
+  // Filter yang sama untuk tabel akun pengguna terdaftar.
+  const filteredVisitors = visitors.filter((visitor) => (
     [visitor.name, visitor.email, visitor.status]
       .some((value) => value.toLocaleLowerCase('id-ID').includes(normalizedSearch))
   ))
@@ -511,7 +519,7 @@ function Admin() {
                 <div className="small-box text-bg-warning"><div className="inner"><h3>{newOrders}</h3><p>Pesanan Baru</p></div><i className="small-box-icon bi bi-hourglass-split" aria-hidden="true" /></div>
               </div>
               <div className="col-lg-3 col-6">
-                <div className="small-box text-bg-success"><div className="inner"><h3>{demoVisitors.length}</h3><p>User Pengunjung (Contoh)</p></div><i className="small-box-icon bi bi-people" aria-hidden="true" /></div>
+                <div className="small-box text-bg-success"><div className="inner"><h3>{visitors.length}</h3><p>Pengguna Terdaftar</p></div><i className="small-box-icon bi bi-people" aria-hidden="true" /></div>
               </div>
               <div className="col-lg-3 col-6">
                 <div className="small-box text-bg-danger"><div className="inner"><h3 className="fs-4">{formatRupiah(revenue)}</h3><p>Omzet Selesai</p></div><i className="small-box-icon bi bi-cash-stack" aria-hidden="true" /></div>
@@ -689,13 +697,14 @@ function Admin() {
               </div>
               <div className="card-footer text-secondary small">Perubahan status disimpan di browser ini dan terlihat pada tab dashboard lain.</div>
             </div>
-            {/* TABEL PENGUNJUNG (data contoh, bukan data nyata). */}
+            {/* TABEL PENGUNJUNG dari akun pengguna yang terdaftar di browser ini. */}
             <div className="card" id="visitors">
-              <div className="card-header"><h2 className="card-title">User Pengunjung (Data Contoh)</h2></div>
+              <div className="card-header"><h2 className="card-title">Pengunjung Terdaftar</h2></div>
+              {visitorsError && <div className="alert alert-danger m-3 mb-0" role="alert">{visitorsError}</div>}
               <div className="card-body p-0">
                 <div className="table-responsive">
                   <table className="table table-hover align-middle mb-0">
-                    <thead><tr><th>Nama Pengunjung</th><th>Email Contoh</th><th>Jumlah Kunjungan</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Nama Pengunjung</th><th>Email</th><th>Jumlah Kunjungan</th><th>Status</th></tr></thead>
                     <tbody>
                       {filteredVisitors.map((visitor) => (
                         <tr key={visitor.email}>
@@ -704,7 +713,7 @@ function Admin() {
                         </tr>
                       ))}
                       {filteredVisitors.length === 0 && (
-                        <tr><td className="text-center text-secondary py-4" colSpan="4">Tidak ada pengunjung yang cocok.</td></tr>
+                        <tr><td className="text-center text-secondary py-4" colSpan="4">{visitors.length === 0 ? 'Belum ada akun pengguna terdaftar di browser ini.' : 'Tidak ada pengunjung yang cocok.'}</td></tr>
                       )}
                     </tbody>
                   </table>

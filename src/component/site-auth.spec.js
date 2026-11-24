@@ -1,6 +1,6 @@
 import { webcrypto } from 'node:crypto'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { authenticateSiteUser, registerSiteUser } from './site-auth.js'
+import { authenticateSiteUser, readSiteVisitors, registerSiteUser } from './site-auth.js'
 
 describe('site user accounts', () => {
   let localStorageData
@@ -24,7 +24,14 @@ describe('site user accounts', () => {
     })
 
     expect(user).toEqual({ name: 'Kelvin', email: 'kelvin@example.com' })
+    expect(readSiteVisitors()).toEqual([{
+      name: 'Kelvin',
+      email: 'kelvin@example.com',
+      visits: 1,
+      status: 'Terdaftar',
+    }])
     expect(await authenticateSiteUser({ email: 'KELVIN@example.com', password: 'rahasia123' })).toEqual(user)
+    expect(readSiteVisitors()[0].visits).toBe(2)
     expect(await authenticateSiteUser({ email: 'kelvin@example.com', password: 'salah1234' })).toBeNull()
     expect(localStorageData.get('pak-gondes-site-users')).not.toContain('rahasia123')
   })

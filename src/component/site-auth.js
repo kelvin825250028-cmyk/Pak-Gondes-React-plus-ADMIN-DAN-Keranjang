@@ -1,9 +1,9 @@
-const SITE_USERS_KEY = 'pak-gondes-site-users'
+export const SITE_USERS_STORAGE_KEY = 'pak-gondes-site-users'
 const SITE_SESSION_KEY = 'pak-gondes-site-auth'
 const PASSWORD_HASH_ITERATIONS = 120000
 
 function readUsers() {
-  const savedUsers = localStorage.getItem(SITE_USERS_KEY)
+  const savedUsers = localStorage.getItem(SITE_USERS_STORAGE_KEY)
   if (savedUsers === null) return []
 
   const users = JSON.parse(savedUsers)
@@ -17,6 +17,10 @@ function readUsers() {
     throw new Error('Data akun tersimpan tidak valid.')
   }
   return users
+}
+
+function saveUsers(users) {
+  localStorage.setItem(SITE_USERS_STORAGE_KEY, JSON.stringify(users))
 }
 
 function bytesToHex(bytes) {
@@ -77,19 +81,40 @@ export async function registerSiteUser({ name, email, password }) {
     email: normalizedEmail,
     salt: bytesToHex(salt),
     passwordHash: await hashPassword(password, salt),
+    visits: 1,
+    createdAt: new Date().toISOString(),
+    lastLogin: new Date().toISOString(),
   }
-  localStorage.setItem(SITE_USERS_KEY, JSON.stringify([...users, user]))
+  saveUsers([...users, user])
   return { name: user.name, email: user.email }
 }
 
 export async function authenticateSiteUser({ email, password }) {
   const normalizedEmail = email.trim().toLocaleLowerCase('id-ID')
-  const user = readUsers().find((account) => account.email === normalizedEmail)
-  if (!user) return null
+  const users = readUsers()
+  const userIndex = users.findIndex((account) => account.email === normalizedEmail)
+  if (userIndex === -1) return null
+  const user = users[userIndex]
 
   const candidateHash = await hashPassword(password, hexToBytes(user.salt))
   if (!passwordsMatch(candidateHash, user.passwordHash)) return null
+  const updatedUser = {
+    ...user,
+    visits: Number.isSafeInteger(user.visits) && user.visits >= 0 ? user.visits + 1 : 1,
+    lastLogin: new Date().toISOString(),
+  }
+  users[userIndex] = updatedUser
+  saveUsers(users)
   return { name: user.name, email: user.email }
+}
+
+export function readSiteVisitors() {
+  return readUsers().map((user) => ({
+    name: user.name,
+    email: user.email,
+    visits: Number.isSafeInteger(user.visits) && user.visits >= 0 ? user.visits : 0,
+    status: 'Terdaftar',
+  }))
 }
 
 export function readSiteSession() {
