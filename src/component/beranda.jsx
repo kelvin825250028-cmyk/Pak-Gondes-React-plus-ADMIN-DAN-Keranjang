@@ -1,9 +1,12 @@
 /**
  * beranda.jsx - halaman BERANDA (?page=beranda).
  */
+import { useEffect, useState } from 'react'
 import { imageUrl, pageUrl, videoUrl } from './index.jsx'
 import { formatRupiah } from './cart-utils.js'
 import useMenuCatalog from './use-menu-catalog.js'
+import { defaultMenuItems } from './menu-data.js'
+import { HOME_CONTENT_STORAGE_KEY, readHomeContent } from './home-content.js'
 
 // Daftar menu yang dipajang di beranda: pasangan [id menu, label promosi].
 // Hanya id yang disimpan di sini; nama, harga, deskripsi, dan gambar diambil dari data menu supaya selalu sama dengan halaman Menu.
@@ -12,6 +15,7 @@ const featuredMenu = [
   ['nasi-ayam-goreng-sambal-kampoeng', 'KREMES GURIH'],
   ['nasi-ayam-goreng-kalasan', 'MANIS GURIH'],
   ['nasi-ayam-geprek-mozarella-sambal-gondes', 'KEJU LUMER'],
+  ['nasi-ayam-sambal-matah', 'SEGAR PEDAS'],
 ]
 
 // Komponen kecil yang bisa dipakai ulang: satu kartu menu favorit. Data dikirim lewat props.
@@ -34,11 +38,24 @@ function KartuFavorit({ image, alt, label, name, price, description }) {
 function Beranda() {
   // Ambil menu terkini (sinkron dengan perubahan admin).
   const [menuItems] = useMenuCatalog()
+  const [homeContent, setHomeContent] = useState(readHomeContent)
+
+  useEffect(() => {
+    function syncHomeContent(event) {
+      if (event.key === HOME_CONTENT_STORAGE_KEY || event.key === null) {
+        setHomeContent(readHomeContent())
+      }
+    }
+    window.addEventListener('storage', syncHomeContent)
+    return () => window.removeEventListener('storage', syncHomeContent)
+  }, [])
+
   // Gabungkan daftar featuredMenu dengan data menu asli lewat id.
   const favorites = featuredMenu
     .map(([id, label]) => {
       // Cari menu berdasarkan id.
       const item = menuItems.find((menuItem) => menuItem.id === id)
+        ?? defaultMenuItems.find((menuItem) => menuItem.id === id)
       return item ? { ...item, label, alt: item.name, price: formatRupiah(item.price) } : null
     })
     // Buang entri null: bila admin mengganti/menghapus id menu, kartu itu dilewati dan tidak membuat error.
@@ -51,30 +68,31 @@ function Beranda() {
           <div className="row align-items-center g-4">
             <div className="col-12 col-lg-7">
               <span className="badge rounded-pill bg-warning-subtle text-danger-emphasis fw-bold">
-                SAMBAL ULEG BAWANG &amp; RAWIT MERAH ASLI
+                {homeContent.badge}
               </span>
-              <h1>Ayam Lezat, <span className="text-danger">Sambal Gondes</span>, Harga Bersahabat</h1>
-              <p>Kuliner ayam goreng &amp; geprek khas racikan Pak Gondes di Grogol, Jakarta Barat. Sambal uleg pedas mantap, porsi mengenyangkan, dan harga ramah kantong mahasiswa &amp; keluarga!</p>
+              <h1>{homeContent.titlePrefix} <span className="text-danger">{homeContent.titleHighlight}</span>{homeContent.titleSuffix}</h1>
+              <p>{homeContent.description}</p>
               <div className="d-flex gap-3 flex-wrap mt-3">
-                <a className="btn btn-danger" href={pageUrl('menu')}>Lihat Menu Lengkap</a>
-                <a className="btn btn-outline-danger" href={pageUrl('kontak')}>Pesan Sekarang</a>
+                <a className="btn btn-danger" href={pageUrl(homeContent.primaryTarget)}>{homeContent.primaryButton}</a>
+                <a className="btn btn-outline-danger" href={pageUrl(homeContent.secondaryTarget)}>{homeContent.secondaryButton}</a>
               </div>
             </div>
             <div className="col-12 col-lg-5">
               <img
                 className="photo img-fluid w-100 object-fit-cover rounded-3"
-                src={imageUrl('hero.jpg')}
-                alt="Ayam geprek sambal Gondes khas Pak Gondes"
+                src={imageUrl(homeContent.image)}
+                alt={homeContent.imageAlt}
                 // Memberi tahu browser agar gambar hero (paling atas) dimuat lebih dulu. Gambar lain memakai loading="lazy" (dimuat saat didekati).
                 fetchPriority="high"
               />
             </div>
           </div>
-          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4">
-            <div className="card text-center p-4 h-100"><b className="d-block text-danger fs-2">100%</b>Bahan Halal</div>
-            <div className="card text-center p-4 h-100"><b className="d-block text-danger fs-2">Rp 12rb</b>Mulai Dari</div>
-            <div className="card text-center p-4 h-100"><b className="d-block text-danger fs-2">4.9 ★</b>1.500+ Ulasan</div>
-            <div className="card text-center p-4 h-100"><b className="d-block text-danger fs-2">Promo</b>Pelajar Trisakti / Untar / Ukrida</div>
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-4 menu-muncul">
+            {homeContent.stats.map((stat) => (
+              <div className="card text-center p-4 h-100" key={stat.label}>
+                <b className="d-block text-danger fs-2">{stat.value}</b>{stat.label}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -86,7 +104,7 @@ function Beranda() {
             <h2>Menu Favorit Pilihan Pelanggan</h2>
             <p className="text-secondary">Paling sering dipesan oleh mahasiswa dan warga Grogol. Daging ayam empuk bumbu meresap berpadu lauk hangat khas Nusantara.</p>
           </div>
-          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+          <div className="favorite-menu-grid">
             {/* RENDER DAFTAR: satu <KartuFavorit> per menu. Atribut 'key' WAJIB unik agar React dapat melacak tiap elemen. */}
             {favorites.map((item) => (
               <KartuFavorit

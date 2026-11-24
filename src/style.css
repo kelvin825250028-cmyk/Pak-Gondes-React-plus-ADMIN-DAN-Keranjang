@@ -94,6 +94,24 @@ body {
   min-height: 3.6em;
   line-height: 1.2;
 }
+
+.favorite-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 1199.98px) {
+  .favorite-menu-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  .favorite-menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
 /* Baris kosong: pemisah visual untuk bagian gaya berikutnya. */
 /* Baris 51: penjelasan untuk deklarasi atau aturan CSS berikut. */
 .store-status-bar {

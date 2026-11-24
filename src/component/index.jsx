@@ -36,7 +36,7 @@ export function videoUrl(fileName) {
 }
 
 // LAYOUT situs publik: status bar, navbar, isi halaman ({children}), dan footer. Dipakai semua halaman kecuali admin.
-export function SiteLayout({ activePage, children }) {
+export function SiteLayout({ activePage, children, userName, onLogout }) {
   // Mengambil jumlah item dari keranjang untuk badge di navbar.
   const { itemCount } = useCart()
   // State status buka/tutup. Nilai awal memanggil isStoreOpen (lazy initializer).
@@ -125,6 +125,10 @@ export function SiteLayout({ activePage, children }) {
             <i className="bi bi-basket3 me-1" aria-hidden="true" />
             Keranjang <span className="badge rounded-pill bg-light text-danger ms-1">{itemCount}</span>
           </a>
+          <div className="d-flex align-items-center gap-2">
+            <span className="small text-secondary">Hai, {userName}</span>
+            <button className="btn btn-outline-secondary btn-sm" type="button" onClick={onLogout}>Keluar</button>
+          </div>
         </div>
       </header>
       {/* Isi halaman diselipkan di sini. id="main" adalah target 'Skip to main content' di index.html. */}

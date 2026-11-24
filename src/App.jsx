@@ -42,11 +42,11 @@ function App() {
   useEffect(() => {
     document.title = `${title} | Ayam Pak Gondesss`
   }, [title])
-  const { authenticated, login } = useSiteAuth()
+  const { authenticated, user, login, register, logout } = useSiteAuth()
 
-if (!authenticated) {
-  return <SiteLogin onLogin={login} />
-}
+  if (!authenticated) {
+    return <SiteLogin onLogin={login} onRegister={register} />
+  }
 
   return (
     // CartProvider membungkus SEMUA halaman sehingga data keranjang bisa diakses dari komponen mana pun lewat useCart().
@@ -59,7 +59,7 @@ if (!authenticated) {
         <Page />
       ) : (
         // Children (<Page />) akan muncul di dalam <main> pada SiteLayout.
-        <SiteLayout activePage={page}>
+        <SiteLayout activePage={page} userName={user.name} onLogout={logout}>
           <Page />
         </SiteLayout>
       )}

@@ -15,13 +15,17 @@ import { formatRupiah, readOrders, saveOrders } from './cart-utils.js'
 import { createMenuId, menuCategories, saveMenu } from './menu-data.js'
 import { pageUrl } from './navigation.js'
 import useMenuCatalog from './use-menu-catalog.js'
+import {
+  AUTH_STORAGE_KEY,
+  isValidAdminCredentials,
+} from './admin-auth.js'
+import {
+  readHomeContent,
+  saveHomeContent,
+  defaultHomeContent,
+  homeButtonTargets,
+} from './home-content.js'
 
-// PERINGATAN KEAMANAN: kredensial di sini terlihat oleh siapa saja yang membuka kode sumber di browser.
-// Ini hanya DEMO untuk tugas. Aplikasi sungguhan wajib memakai autentikasi di server (backend).
-const ADMIN_EMAIL = 'admin@pakgondes.local'
-const ADMIN_PASSWORD = 'GondesDemo2025!'
-// Penanda 'sudah login' disimpan di sessionStorage (hilang saat tab ditutup), berbeda dari localStorage yang permanen.
-const AUTH_STORAGE_KEY = 'pakgondes_admin_authenticated'
 // Daftar status pesanan yang dapat dipilih admin.
 const orderStatuses = ['Baru', 'Menunggu konfirmasi', 'Diproses', 'Selesai', 'Dibatalkan']
 // Data PENGUNJUNG CONTOH (palsu). Aplikasi belum mengumpulkan data pengunjung sungguhan; tabel ini hanya contoh tampilan.
@@ -56,6 +60,9 @@ function Admin() {
     description: '',
   })
   const [menuError, setMenuError] = useState('')
+  const [activeView, setActiveView] = useState('dashboard')
+  const [homeContent, setHomeContent] = useState(readHomeContent)
+  const [homeContentMessage, setHomeContentMessage] = useState('')
 
   // Sinkronisasi pesanan: bila ada pesanan baru dari tab lain (event 'storage'), muat ulang agar dashboard selalu terbaru.
   useEffect(() => {
@@ -98,15 +105,19 @@ function Admin() {
   }, [authenticated])
 
   // Cocokkan email & sandi dengan konstanta. Jika benar: simpan penanda ke sessionStorage + ubah state.
-  function login(event) {
+  async function login(event) {
     event.preventDefault()
-    if (credentials.email !== ADMIN_EMAIL || credentials.password !== ADMIN_PASSWORD) {
-      setError('Email atau kata sandi tidak sesuai.')
-      return
+    try {
+      if (!await isValidAdminCredentials(credentials)) {
+        setError('Email atau kata sandi tidak sesuai.')
+        return
+      }
+      sessionStorage.setItem(AUTH_STORAGE_KEY, 'true')
+      setAuthenticated(true)
+      setError('')
+    } catch (loginError) {
+      setError(`Login gagal diverifikasi: ${loginError.message}`)
     }
-    sessionStorage.setItem(AUTH_STORAGE_KEY, 'true')
-    setAuthenticated(true)
-    setError('')
   }
 
   // Hapus penanda login.
@@ -204,6 +215,29 @@ function Admin() {
     setEditingMenuId(null)
     setMenuForm({ category: menuCategories[0], name: '', price: '', description: '' })
     setMenuError('')
+  }
+
+  function submitHomeContent(event) {
+    event.preventDefault()
+    saveHomeContent(homeContent)
+    setHomeContentMessage('Konten beranda berhasil disimpan.')
+  }
+
+  function resetHomeContent() {
+    setHomeContent({
+      ...defaultHomeContent,
+      stats: defaultHomeContent.stats.map((stat) => ({ ...stat })),
+    })
+    setHomeContentMessage('')
+  }
+
+  function updateHomeStat(index, field, value) {
+    setHomeContent({
+      ...homeContent,
+      stats: homeContent.stats.map((stat, statIndex) => (
+        statIndex === index ? { ...stat, [field]: value } : stat
+      )),
+    })
   }
 
   // DATA TURUNAN (dihitung ulang tiap render, bukan state): kata kunci pencarian dinormalisasi ke huruf kecil.
@@ -350,6 +384,15 @@ function Admin() {
                 </a>
               </li>
               <li className="nav-item">
+                <button
+                  className={`nav-link w-100 border-0 text-start ${activeView === 'home-content' ? 'active' : ''}`}
+                  type="button"
+                  onClick={() => setActiveView('home-content')}
+                >
+                  <i className="nav-icon bi bi-house-gear" aria-hidden="true" /><p>Edit Konten Beranda</p>
+                </button>
+              </li>
+              <li className="nav-item">
                 <a className="nav-link" href={pageUrl('beranda')}>
                   <i className="nav-icon bi bi-arrow-left" aria-hidden="true" /><p>Kembali ke Website</p>
                 </a>
@@ -375,6 +418,86 @@ function Admin() {
         </div>
         <div className="app-content">
           <div className="container-fluid">
+            {activeView === 'home-content' ? (
+              <section className="card">
+                <div className="card-header d-flex align-items-center justify-content-between">
+                  <h2 className="card-title mb-0">Edit Konten Beranda</h2>
+                  <button className="btn btn-outline-secondary btn-sm" type="button" onClick={() => setActiveView('dashboard')}>
+                    <i className="bi bi-arrow-left me-1" aria-hidden="true" />Kembali ke Dashboard
+                  </button>
+                </div>
+                <div className="card-body">
+                  <form onSubmit={submitHomeContent} className="row g-3">
+                    <div className="col-md-4">
+                      <label className="form-label" htmlFor="home-badge">Badge atas</label>
+                      <input className="form-control" id="home-badge" value={homeContent.badge} onChange={(event) => setHomeContent({ ...homeContent, badge: event.target.value })} required />
+                    </div>
+                    <div className="col-md-4">
+                      <label className="form-label" htmlFor="home-title-prefix">Judul awal</label>
+                      <input className="form-control" id="home-title-prefix" value={homeContent.titlePrefix} onChange={(event) => setHomeContent({ ...homeContent, titlePrefix: event.target.value })} required />
+                    </div>
+                    <div className="col-md-4">
+                      <label className="form-label" htmlFor="home-title-highlight">Judul warna merah</label>
+                      <input className="form-control" id="home-title-highlight" value={homeContent.titleHighlight} onChange={(event) => setHomeContent({ ...homeContent, titleHighlight: event.target.value })} required />
+                    </div>
+                    <div className="col-md-8">
+                      <label className="form-label" htmlFor="home-title-suffix">Sisa judul</label>
+                      <input className="form-control" id="home-title-suffix" value={homeContent.titleSuffix} onChange={(event) => setHomeContent({ ...homeContent, titleSuffix: event.target.value })} required />
+                    </div>
+                    <div className="col-md-4">
+                      <label className="form-label" htmlFor="home-image">Nama file gambar</label>
+                      <input className="form-control" id="home-image" value={homeContent.image} onChange={(event) => setHomeContent({ ...homeContent, image: event.target.value })} required />
+                      <small className="text-secondary">Contoh: hero.jpg</small>
+                    </div>
+                    <div className="col-12">
+                      <label className="form-label" htmlFor="home-description">Deskripsi</label>
+                      <textarea className="form-control" id="home-description" rows="3" value={homeContent.description} onChange={(event) => setHomeContent({ ...homeContent, description: event.target.value })} required />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label" htmlFor="home-primary">Tombol utama</label>
+                      <input className="form-control" id="home-primary" value={homeContent.primaryButton} onChange={(event) => setHomeContent({ ...homeContent, primaryButton: event.target.value })} required />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label" htmlFor="home-secondary">Tombol kedua</label>
+                      <input className="form-control" id="home-secondary" value={homeContent.secondaryButton} onChange={(event) => setHomeContent({ ...homeContent, secondaryButton: event.target.value })} required />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label" htmlFor="home-primary-target">Tujuan tombol utama</label>
+                      <select className="form-select" id="home-primary-target" value={homeContent.primaryTarget} onChange={(event) => setHomeContent({ ...homeContent, primaryTarget: event.target.value })}>
+                        {homeButtonTargets.map((target) => <option key={target.value} value={target.value}>{target.label}</option>)}
+                      </select>
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label" htmlFor="home-secondary-target">Tujuan tombol kedua</label>
+                      <select className="form-select" id="home-secondary-target" value={homeContent.secondaryTarget} onChange={(event) => setHomeContent({ ...homeContent, secondaryTarget: event.target.value })}>
+                        {homeButtonTargets.map((target) => <option key={target.value} value={target.value}>{target.label}</option>)}
+                      </select>
+                    </div>
+                    <div className="col-12">
+                      <label className="form-label" htmlFor="home-image-alt">Teks alternatif gambar</label>
+                      <input className="form-control" id="home-image-alt" value={homeContent.imageAlt} onChange={(event) => setHomeContent({ ...homeContent, imageAlt: event.target.value })} required />
+                    </div>
+                    {homeContent.stats.map((stat, index) => (
+                      <div className="col-md-6" key={index}>
+                        <div className="border rounded p-3">
+                          <h3 className="h6">Kotak Statistik {index + 1}</h3>
+                          <label className="form-label" htmlFor={`home-stat-value-${index}`}>Angka / judul</label>
+                          <input className="form-control mb-2" id={`home-stat-value-${index}`} value={stat.value} onChange={(event) => updateHomeStat(index, 'value', event.target.value)} required />
+                          <label className="form-label" htmlFor={`home-stat-label-${index}`}>Keterangan</label>
+                          <input className="form-control" id={`home-stat-label-${index}`} value={stat.label} onChange={(event) => updateHomeStat(index, 'label', event.target.value)} required />
+                        </div>
+                      </div>
+                    ))}
+                    {homeContentMessage && <div className="col-12"><p className="alert alert-success mb-0" role="status">{homeContentMessage}</p></div>}
+                    <div className="col-12 d-flex gap-2">
+                      <button className="btn btn-danger" type="submit"><i className="bi bi-save me-1" aria-hidden="true" />Simpan Konten</button>
+                      <button className="btn btn-outline-secondary" type="button" onClick={resetHomeContent}>Kembalikan Default</button>
+                    </div>
+                  </form>
+                </div>
+              </section>
+            ) : (
+              <>
             <div className="alert alert-info" role="note">
               <i className="bi bi-info-circle me-2" aria-hidden="true" />
               Pesanan dibaca dari browser yang sama dengan keranjang. Dashboard ini belum menggunakan backend/database.
@@ -588,6 +711,8 @@ function Admin() {
                 </div>
               </div>
             </div>
+            </>
+            )}
           </div>
         </div>
       </main>
