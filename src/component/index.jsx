@@ -54,7 +54,7 @@ export function SiteLayout({ activePage, children, userName, onLogout }) {
       {/* Bar status paling atas. Kelas 'is-open' / 'is-closed' (lihat style.css) mengubah warnanya. role="status" memberi tahu screen reader. */}
       <div className={`store-status-bar text-center text-light py-2 small ${storeOpen ? 'is-open' : 'is-closed'}`} role="status">
         <strong>{storeOpen ? 'BUKA' : 'TUTUP'}</strong>
-        {' '}&bull; Setiap hari 10.00 - 22.00 WIB &bull; WA 0812-3456-7890 &bull;
+        {' '}&bull; Setiap hari 10.00 - 22.00 WIB &bull; Telepon 0812-3456-7890 &bull;
         Grogol, Jakarta Barat
       </div>
       {/* NAVBAR. 'sticky-top' membuatnya menempel di atas saat halaman digulir. */}
@@ -159,7 +159,7 @@ export function SiteLayout({ activePage, children, userName, onLogout }) {
             <div className="col-12 col-md-6 col-lg-3">
               <h2 className="h5 text-warning mb-3">Kontak &amp; Lokasi</h2>
               <p>Jl. Dr. Susilo Raya No. 42, Grogol Petamburan, Jakarta Barat 11450</p>
-              <p>WA: +62 812-3456-7890</p>
+              <p>Telepon: +62 812-3456-7890</p>
               <p>Instagram @ayampakgondes<br />TikTok @ayampakgondes<br />GoFood &amp; GrabFood</p>
             </div>
           </div>

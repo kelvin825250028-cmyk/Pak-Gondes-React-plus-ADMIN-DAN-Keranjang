@@ -122,12 +122,12 @@ function KontakPesan() {
                 />
               </div>
               <div className="mb-3">
-                <label className="form-label" htmlFor="wa">Nomor Telepon <span>*</span></label>
+                <label className="form-label" htmlFor="telepon">Nomor Telepon <span>*</span></label>
                 <input
                   type="tel"
                   className="form-control"
-                  id="wa"
-                  name="wa"
+                  id="telepon"
+                  name="telepon"
                   placeholder="Contoh: 081234567890"
                   value={telepon}
                   onChange={(event) => setTelepon(event.target.value)}
@@ -189,7 +189,7 @@ function KontakPesan() {
                   Harga satuan: {selectedMenu ? formatRupiah(selectedMenu.price) : 'Pilih kategori dan menu terlebih dahulu'}
                   {selectedMenu && <> &bull; Subtotal: <strong>{formatRupiah(selectedMenu.price * jumlah)}</strong></>}
                 </p>
-                <p className="small text-secondary">Pemesanan di atas 15 porsi untuk rapat/acara kampus, konfirmasi via WA H-1.</p>
+                <p className="small text-secondary">Pemesanan di atas 15 porsi untuk rapat/acara kampus, hubungi warung H-1.</p>
               </div>
               {/* Pilihan jenis layanan (radio button): 'checked' ditentukan state sehingga hanya satu yang terpilih. */}
               <fieldset className="mb-3">
@@ -249,7 +249,7 @@ function KontakPesan() {
                     <span className="text-end">10:00 - 22:00 WIB<br /><small className="text-secondary">Senin - Minggu</small></span>
                   </div>
                   <div className="d-flex justify-content-between align-items-start gap-3 py-2">
-                    <strong>WhatsApp Admin</strong>
+                    <strong>Telepon</strong>
                     <span className="text-nowrap">+62 812-3456-7890</span>
                   </div>
                   <p className="small text-secondary mt-2 mb-0">Gratis antar radius 1 km untuk mahasiswa, kosan Susilo, Makaliwe, dan sekitarnya (minimal 2 porsi).</p>

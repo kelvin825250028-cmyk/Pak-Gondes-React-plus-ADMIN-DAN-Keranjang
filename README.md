@@ -17,7 +17,7 @@ URL website: https://kelvin825250028-cmyk.github.io/Pak-Gondes-React-plus-ADMIN-
 
 ## Keranjang dan dashboard
 
-Pilih menu dari halaman **Menu**, tambahkan ke keranjang, lalu isi detail pemesan dan buat pesanan. Pesanan langsung dicatat tanpa konfirmasi WhatsApp, lalu struk ditampilkan dan dapat dicetak. Data keranjang dan pesanan disimpan di `localStorage` browser; dashboard admin membaca pesanan dari browser yang sama, dan perubahan status disimpan di sana. Data tidak disinkronkan ke browser atau perangkat lain.
+Pilih menu dari halaman **Menu**, tambahkan ke keranjang, lalu isi detail pemesan dan buat pesanan. Pesanan langsung dicatat tanpa terhubung ke WhatsApp, lalu struk ditampilkan dan dapat dicetak. Data keranjang dan pesanan disimpan di `localStorage` browser; dashboard admin membaca pesanan dari browser yang sama, dan perubahan status disimpan di sana. Data tidak disinkronkan ke browser atau perangkat lain.
 
 Halaman **Admin** meminta login dan menggunakan layout AdminLTE. Dashboard menampilkan tabel pesanan aktual dari keranjang dengan pencarian dan pengelolaan status. Tabel pengunjung menampilkan akun yang mendaftar di browser yang sama serta jumlah login mereka. Akun demo admin lokal:
 
